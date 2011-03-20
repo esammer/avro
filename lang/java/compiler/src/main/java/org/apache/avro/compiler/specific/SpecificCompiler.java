@@ -353,6 +353,16 @@ public class SpecificCompiler {
     return word;
   }
 
+  public static String toGetterName(String name) {
+    return "get" + name.substring(0, 1).toUpperCase()
+      + name.substring(1);
+  }
+
+  public static String toSetterName(String name) {
+    return "set" + name.substring(0, 1).toUpperCase()
+      + name.substring(1);
+  }
+
   public static void main(String[] args) throws Exception {
     //compileSchema(new File(args[0]), new File(args[1]));
     compileProtocol(new File(args[0]), new File(args[1]));

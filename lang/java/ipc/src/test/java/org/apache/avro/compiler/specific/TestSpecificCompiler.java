@@ -223,6 +223,20 @@ public class TestSpecificCompiler {
     assertTrue(lastModified != outputFile.lastModified());
   }
 
+  @Test
+  public void testToGetterName() {
+    assertEquals("getOne", SpecificCompiler.toGetterName("one"));
+    assertEquals("getTwoThree", SpecificCompiler.toGetterName("twoThree"));
+    assertEquals("getFour_five", SpecificCompiler.toGetterName("four_five"));
+  }
+
+  @Test
+  public void testToSetterName() {
+    assertEquals("setOne", SpecificCompiler.toSetterName("one"));
+    assertEquals("setTwoThree", SpecificCompiler.toSetterName("twoThree"));
+    assertEquals("setFour_five", SpecificCompiler.toSetterName("four_five"));
+  }
+
   /**
    * Checks that a schema passes through the SpecificCompiler, and,
    * optionally, uses the system's Java compiler to check
