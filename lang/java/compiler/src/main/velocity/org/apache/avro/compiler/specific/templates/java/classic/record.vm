@@ -57,24 +57,28 @@ public class ${this.mangle($schema.getName())}#if ($schema.isError()) extends or
 #if (!$schema.isError())
 #foreach ($field in $schema.getFields())
 
-#if ($field.doc())
   /**
+#if ($field.doc())
    * $field.doc()
+#else
+   * Gets the value of $field.name().
+#end
    *
    * @returns the value of $field.name()
    */
-#end
   public ${this.javaUnbox($field.schema())} ${this.toGetterName($field.name())}() {
     return ${this.mangle($field.name())};
   }
 
-#if ($field.doc())
   /**
+#if ($field.doc())
    * $field.doc()
+#else
+   * Sets the value of $field.name() to {@code ${this.mangle($field.name())}}.
+#end
    *
    * @param ${this.mangle($field.name())} new value for field {@code $field.name()}
    */
-#end
   public void ${this.toSetterName($field.name())}(${this.javaUnbox($field.schema())} ${this.mangle($field.name())}) {
     this.${this.mangle($field.name())} = ${this.mangle($field.name())};
   }
