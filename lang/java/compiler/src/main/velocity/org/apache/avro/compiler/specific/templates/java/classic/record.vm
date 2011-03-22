@@ -55,17 +55,50 @@ public class ${this.mangle($schema.getName())}#if ($schema.isError()) extends or
     }
   }
 #if (!$schema.isError())
-#set ($i = 0)
 #foreach ($field in $schema.getFields())
 
-  public ${this.javaType($field.schema())} ${this.toGetterName($field.name())}() {
-    return (${this.javaType($field.schema())}) get($i);
+#if ($field.doc())
+  /**
+   * $field.doc()
+   *
+   * @returns the value of $field.name()
+   */
+#end
+  public ${this.javaUnbox($field.schema())} ${this.toGetterName($field.name())}() {
+    return ${this.mangle($field.name())};
   }
 
-  public void ${this.toSetterName($field.name())}(${this.javaType($field.schema())} ${this.mangle($field.name())}) {
-    put($i, ${this.mangle($field.name())});
+#if ($field.doc())
+  /**
+   * $field.doc()
+   *
+   * @param ${this.mangle($field.name())} new value for field {@code $field.name()}
+   */
+#end
+  public void ${this.toSetterName($field.name())}(${this.javaUnbox($field.schema())} ${this.mangle($field.name())}) {
+    this.${this.mangle($field.name())} = ${this.mangle($field.name())};
   }
-#set ($i = $i + 1)
+#foreach ($alias in $field.getAliases())
+
+  /**
+   * An alias for ${this.toGetterName($field.name())}().
+   *
+   * @see {@link #${this.toGetterName($field.name())}()}
+   */
+  public ${this.javaUnbox($field.schema())} ${this.toGetterName($alias)}() {
+    return ${this.mangle($field.name())};
+  }
+
+  /**
+   * An alias for ${this.toSetterName($field.name())}(${this.javaUnbox($field.schema())}).
+   *
+   * @see {@link #${this.toSetterName($field.name())}(${this.javaUnbox($field.schema())})}
+   */
+  public void ${this.toSetterName($alias)}(${this.javaUnbox($field.schema())} ${this.mangle($alias)}) {
+    this.${this.mangle($field.name())} = ${this.mangle($alias)};
+  }
 #end
 #end
+#end
+
 }

@@ -406,6 +406,9 @@ public abstract class Schema {
         this.aliases = new LinkedHashSet<String>();
       aliases.add(alias);
     }
+    public Set<String> getAliases() {
+      return aliases;
+    }
     public boolean equals(Object other) {
       if (other == this) return true;
       if (!(other instanceof Field)) return false;
